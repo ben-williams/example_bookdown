@@ -1,0 +1,59 @@
+---
+title: "example"
+author: "Ben Williams"
+date: "3/1/2022"
+output: 
+  bookdown::html_document2:
+    toc: false
+    number_sections: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = F)
+library(ggplot2)
+
+```
+
+How to cross reference figures and tables using `bookdown`. 
+
+Let's start by using a figure reference. 
+This is done using `Figure \@ref(fig:fig1)` which would be Figure \@ref(fig:fig1).
+A second figure would be Figure \@ref(fig:fig2).
+
+Note that the numbering is dependent upon the position of the labeled R chunk. 
+If you cut the second figure chunk, paste it above the first and recompile, the numbers will switch.
+
+Can also reference tables using `Table \@ref(tab:tab1)` which would be Table \@ref(tab:tab1).
+
+## Tables
+
+```{r tab1}
+knitr::kable(mtcars, 
+             caption = "Summary of key management measures and the time series of catch, ABC, and TAC for northern rockfish in the Gulf of Alaska",
+             booktabs = TRUE)
+```
+
+## Figures 
+
+```{r fig1, fig.cap="A figure"}
+ggplot(mtcars, aes(cyl, mpg)) + 
+  geom_point()
+```
+
+
+```{r fig2, fig.cap="Another figure"}
+ggplot(mtcars, aes(wt, mpg)) + 
+  geom_point() + 
+  stat_smooth()
+```
+
+If you are calling figures that are already created it is best to use `knitr::include_graphics()`. 
+
+````
+```{r fig3, fig.cap="Estimated and observed long-term and recent commercial catch of northern rockfish in the Gulf of Alaska."}`r ''`
+
+knitr::include_graphics(here::here(year, model, "figs", "catch.png"))
+```
+````
+
+
